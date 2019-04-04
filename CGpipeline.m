@@ -4,14 +4,14 @@
  
 %Load neural data
 load bint_fishmovie32_100
-data=reshape(bint(297,:,:),[160,953]);
+data=reshape(bint(1,:,:),[160,953]);
 data=data*2-1;
 mean(sum(data>0,2)/953);
 mean(mean(data,2));
 
  
 %Pre-allocate space for saving each GC step
-CGevents=3;            %Number of iterations
+CGevents=70;            %Number of iterations
 C{1,CGevents+1}=[];
 C{1}=data;
 Rec=data;
@@ -245,3 +245,14 @@ errorbar(mean(JPD_compar(1,:,k),3),mean(abs(JPD_compar(1,:,:)-JPD_compar(2,:,:))
         imagesc(cov_matrix(cell2mat(R{k}'))~=cov_matrix(cell2mat(D{k}')))
     end
         
+    
+    %Check stuff
+    %cov(C{1}')==cov(cell2mat(D{1}')')
+    %cov(cell2mat(R{1}')')==cov(cell2mat(D{1}')')
+    
+    u=histogram(covDat); 
+    w=histogram(corrcoef(cell2mat(D{1}')'));
+        %semilogy(w.Values)
+        
+        %figure,imagesc(corrcoef(cell2mat(D{1}')'))
+        %figure,imagesc(corrcoef(cell2mat(R{1}')'))
